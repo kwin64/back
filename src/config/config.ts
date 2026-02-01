@@ -1,24 +1,35 @@
 import dotenv from 'dotenv';
+import path from 'path';
 
-dotenv.config();
+dotenv.config({
+  path: path.resolve(process.cwd(), '.env'),
+});
 
 class Config {
-  private constructor() {
-    this.env = process.env.NODE_ENV || 'development';
-    this.port = parseInt(process.env.PORT || '3000', 10);
-  }
   private static instance: Config;
   public readonly env: string;
   public readonly port: number;
-
-  public readonly database = {
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432', 10),
-    name: process.env.DB_NAME || 'myapp',
-    user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || '',
-    ssl: process.env.DB_SSL === 'true',
+  public readonly database: {
+    name: string;
+    // host: string;
+    // port: number;
+    // user: string;
+    // password: string;
+    // ssl: boolean;
+    // pool: {
+    //   max: number;
+    //   min: number;
+    // };
   };
+
+  private constructor() {
+    this.env = process.env.NODE_ENV || 'development';
+    this.port = parseInt(process.env.PORT || '3000', 10);
+
+    this.database = {
+      name: process.env.DB_NAME || 'db without env',
+    };
+  }
 
   public static getInstance(): Config {
     if (!Config.instance) {
@@ -28,4 +39,5 @@ class Config {
   }
 }
 
-export default Config.getInstance();
+const config = Config.getInstance();
+export default config;

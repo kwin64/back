@@ -1,2 +1,2 @@
-const db: [] = []
-export default db
+const db: [] = [];
+export default db;
