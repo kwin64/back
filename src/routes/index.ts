@@ -1,5 +1,4 @@
 import express, { Express, Router } from 'express';
-import config from '../config/config';
 import videos from './videos.route';
 
 const router: Router = express.Router();
