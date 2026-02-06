@@ -1,10 +1,8 @@
 import express, { Express } from 'express';
+import router from './routes';
 
 export const setupApp = (app: Express) => {
   app.use(express.json());
-
-  app.get('/', (req, res) => {
-    res.status(200).send('Hello world!');
-  });
+  app.use('/api', router);
   return app;
 };
