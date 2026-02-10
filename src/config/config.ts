@@ -11,15 +11,6 @@ class Config {
   public readonly port: number;
   public readonly database: {
     name: string;
-    // host: string;
-    // port: number;
-    // user: string;
-    // password: string;
-    // ssl: boolean;
-    // pool: {
-    //   max: number;
-    //   min: number;
-    // };
   };
 
   private constructor() {
