@@ -1,8 +1,14 @@
 import express from 'express';
 import videoController from '../controllers/videos.controller';
+import { HttpResponse } from '../utils/HttpResponse';
 
-const router = express.Router();
+const videosRouter = express.Router();
 
-router.get('/', videoController.getAllVideos);
+videosRouter.get('/', (res, req) => {
+  console.log(
+    'videosRouter.getvideosRouter.getvideosRouter.getvideosRouter.getvideosRouter.getvideosRouter.getvideosRouter.get',
+  );
+});
+videosRouter.post('/', videoController.createNewVideo);
 
-export default router;
+export default videosRouter;

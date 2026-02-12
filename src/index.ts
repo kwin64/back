@@ -3,8 +3,9 @@ import config from './config/config';
 import { setupApp } from './setup-app';
 
 const app = express();
-setupApp(app);
 
+app.use(express.json());
+setupApp(app);
 const PORT = config.port || 5001;
 
 app.listen(PORT, () => {

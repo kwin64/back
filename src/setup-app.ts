@@ -1,8 +1,11 @@
 import express, { Express } from 'express';
-import router from './routes';
+import videosRouter from './routes/videos.route';
 
 export const setupApp = (app: Express) => {
   app.use(express.json());
-  app.use('/api', router);
+  app.get('/api', () => {
+    console.log('app.get');
+  });
+  app.use('/api', videosRouter);
   return app;
 };
