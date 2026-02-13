@@ -1,37 +1,38 @@
 import { Request, Response } from 'express';
 import dbData from '../db/db.json';
-import { HttpResponse } from '../utils/HttpResponse';
+import ApiError from '../utils/ApiError';
 
 class VideosController {
-  private db: any[] = [
-    {
-      id: 1,
-      title: 'First Video',
-      duration: 120,
-      views: 10,
-    },
-    {
-      id: 2,
-      title: 'Second Video',
-      duration: 240,
-      views: 25,
-    },
-  ];
+  private db: any[];
+
+  constructor() {
+    if (!Array.isArray(dbData)) {
+      this.db = [];
+    } else {
+      this.db = dbData;
+    }
+  }
 
   getAllVideos(req: Request, res: Response): void {
     try {
-      HttpResponse.send(res, 200, this.db, 'Videos fetched successfully');
+      console.log('db', this.db);
+      const videos = this.db;
+
+      if (videos.length <= 0) {
+        throw new ApiError(404, 'No videos found');
+      }
+
+      res.send(videos);
     } catch (error) {
-      HttpResponse.send(res, 500, null, 'Failed to fetch videos');
+      if (error instanceof ApiError) {
+        res.status(error.statusCode).json({
+          success: false,
+          message: error.message,
+        });
+      }
     }
   }
-  createNewVideo(req: Request, res: Response): void {
-    try {
-      HttpResponse.send(res, 200, this.db, 'Videos fetched successfully');
-    } catch (error) {
-      HttpResponse.send(res, 500, null, 'Failed to fetch videos');
-    }
-  }
+  createNewVideo(req: Request, res: Response): void {}
 }
 
 export default new VideosController();
